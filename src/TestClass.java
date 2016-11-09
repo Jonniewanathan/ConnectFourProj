@@ -22,14 +22,7 @@ public class TestClass {
         System.out.println("Please enter a Column: ");
         column = input.nextInt();
 
-        while(!valid) {
-            valid = false;
-            if(board[num][column-1] == 1){//checking if a piece exists in the spot
-                board[num][column-1] = 2;//adding a piece to the connect four board
-                valid = true;
-            }
-            num++;
-        }
+        board = CheckMethods.playerCheck(board,column);
 
         for (int i = 5; i >= 0; i--) {//Prints the board out in the console
             for (int j = 0; j < 7; j++) {
