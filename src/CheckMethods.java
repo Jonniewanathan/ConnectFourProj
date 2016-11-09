@@ -3,11 +3,6 @@
  */
 public class CheckMethods {
 
-    public CheckMethods()
-    {
-
-    }
-
     public static int[][] playerCheck (int[][] board,int column,int player)
     {
         boolean valid = false;
@@ -34,5 +29,36 @@ public class CheckMethods {
         }
 
         return board;
+    }
+    public static char checkHorizontalWin(int[][] board)
+    {
+        int numOfYellow = 0;
+        int numOfRed = 0;
+        //Algorithm for Checking for 4 in a row horizontally
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 7; j++) {
+                if (board[i][j] == 2) {
+                    numOfYellow++;
+                    numOfRed = 0;
+                }
+                if (board[i][j] == 3) {
+                    numOfRed++;
+                    numOfYellow = 0;
+                }
+                if (board[i][j] == 1) {
+                    numOfRed = 0;
+                    numOfYellow = 0;
+                }
+                if (numOfYellow == 4) {
+                    return 'Y';
+                }
+                if (numOfRed == 4) {
+                    return 'R';
+                }
+            }
+            numOfRed = 0;
+            numOfYellow = 0;
+        }
+        return 'N';
     }
 }

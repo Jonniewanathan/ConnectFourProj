@@ -11,6 +11,8 @@ public class TestClass {
         int column;
         int num = 0;
         int player;
+        char win = 'N';
+        Scanner input = new Scanner(System.in);
         boolean valid = false;
         //fills the 2-d array with 1 which signifies a blank space
         for (int i = 0; i < 6; i++) {
@@ -18,29 +20,44 @@ public class TestClass {
                 board[i][j] = 1;
             }
         }
-        for (int i = 0; i < 10; i++) {
-            Scanner input = new Scanner(System.in);
-            System.out.println("Please enter a Column: ");
+        do{
+            System.out.println("Please enter a Column Player 1: ");
             column = input.nextInt();
 
             player = 1;
 
             board = CheckMethods.playerCheck(board,column,player);
 
-            System.out.println("Please enter a Column: ");
+            for (int i = 5; i >= 0; i--) {//Prints the board out in the console
+                for (int j = 0; j < 7; j++) {
+                    System.out.print(board[i][j] + " ");
+                }
+                System.out.println();
+            }
+            win = CheckMethods.checkHorizontalWin(board);
+            System.out.println("Please enter a Column Player 2: ");
             column = input.nextInt();
 
             player = 2;
 
             board = CheckMethods.playerCheck(board,column,player);
-        }
 
-
-        for (int i = 5; i >= 0; i--) {//Prints the board out in the console
-            for (int j = 0; j < 7; j++) {
-                System.out.print(board[i][j] + " ");
+            for (int i = 5; i >= 0; i--) {//Prints the board out in the console
+                for (int j = 0; j < 7; j++) {
+                    System.out.print(board[i][j] + " ");
+                }
+                System.out.println();
             }
-            System.out.println();
+            win = CheckMethods.checkHorizontalWin(board);
+
+        }while(win == 'N');
+        if(win == 'Y')
+        {
+            System.out.println("Yellow Wins");
+        }
+        if(win == 'R')
+        {
+            System.out.println("Red Wins");
         }
     }
 
