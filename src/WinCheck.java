@@ -22,7 +22,7 @@ public class WinCheck{
         System.out.println("Please enter a Column: ");
         column = input.nextInt();
 
-        while(valid != true) {
+        while(!valid) {
             valid = false;
             if(board[num][column-1] == 1){//checking if a piece exists in the spot
                 board[num][column-1] = 2;//adding a piece to the connect four board
@@ -31,7 +31,7 @@ public class WinCheck{
             num++;
         }
 
-        for (int i = 0; i < 6; i++) {
+        for (int i = 5; i >= 0; i--) {
             for (int j = 0; j < 7; j++) {
                 System.out.print(board[i][j] + " ");
             }
