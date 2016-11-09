@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 //Class start
 
-public class WinCheck{
+public class TestClass {
     public static void main(String args[])
     {
         int [][] board = new int[6][7];
@@ -31,7 +31,7 @@ public class WinCheck{
             num++;
         }
 
-        for (int i = 5; i >= 0; i--) {
+        for (int i = 5; i >= 0; i--) {//Prints the board out in the console
             for (int j = 0; j < 7; j++) {
                 System.out.print(board[i][j] + " ");
             }
