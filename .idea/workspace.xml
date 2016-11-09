@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="86597530-ea28-4533-8b6c-edf8a6294636" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/CheckMethods.java" afterPath="$PROJECT_DIR$/src/CheckMethods.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/TestClass.java" afterPath="$PROJECT_DIR$/src/TestClass.java" />
     </list>
     <ignored path="ConnectFourProj.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -38,8 +37,8 @@
       <file leaf-file-name="CheckMethods.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/CheckMethods.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.24738675">
-              <caret line="10" column="74" selection-start-line="10" selection-start-column="74" selection-end-line="10" selection-end-column="74" />
+            <state vertical-scroll-proportion="0.76480836">
+              <caret line="27" column="44" selection-start-line="27" selection-start-column="44" selection-end-line="27" selection-end-column="44" />
               <folding />
             </state>
           </provider>
@@ -67,8 +66,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/WinCheck.java" />
-        <option value="$PROJECT_DIR$/src/CheckMethods.java" />
         <option value="$PROJECT_DIR$/src/TestClass.java" />
+        <option value="$PROJECT_DIR$/src/CheckMethods.java" />
       </list>
     </option>
   </component>
@@ -492,8 +491,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/CheckMethods.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.24738675">
-          <caret line="10" column="74" selection-start-line="10" selection-start-column="74" selection-end-line="10" selection-end-column="74" />
+        <state vertical-scroll-proportion="0.76480836">
+          <caret line="27" column="44" selection-start-line="27" selection-start-column="44" selection-end-line="27" selection-end-column="44" />
           <folding />
         </state>
       </provider>

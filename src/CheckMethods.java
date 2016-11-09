@@ -25,7 +25,7 @@ public class CheckMethods {
             if(player == 2)
             {
                 if(board[num][column-1] == 1){//checking if a piece exists in the spot
-                    board[num][column-1] = 2;//adding a piece to the connect four board
+                    board[num][column-1] = 3;//adding a piece to the connect four board
                     valid = true;
                 }
             }
