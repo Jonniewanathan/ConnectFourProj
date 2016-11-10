@@ -65,4 +65,35 @@ public class CheckMethods {
         }
         return 'N';
     }
+    public static char checkVerticalWin(int[][]board)
+    {
+        //Algorithm for checking for 4 in a row vertically
+        int numOfYellow = 0;
+        int numOfRed = 0;
+        for (int j = 0; j < 7; j++) {
+            for (int h = 0; h < 6; h++) {
+                if (board[h][j] == 2) {
+                    numOfYellow++;
+                    numOfRed = 0;
+                }
+                if (board[h][j] == 3) {
+                    numOfRed++;
+                    numOfYellow = 0;
+                }
+                if (board[h][j] == 1) {
+                    numOfRed = 0;
+                    numOfYellow = 0;
+                }
+                if (numOfYellow == 4) {
+                    return 'B';
+                }
+                if (numOfRed == 4) {
+                    return 'R';
+                }
+            }
+            numOfRed = 0;
+            numOfYellow = 0;
+        }
+        return 'N';
+    }
 }
