@@ -16,7 +16,7 @@ public class ConnectFour extends JFrame{
     }
     public ConnectFour()
     {
-        ImageIcon redPiece = new ImageIcon("images/redPiece100.png");
+        ImageIcon redPiece = new ImageIcon("./images/redPiece100.png");
         GridLayout grid = new GridLayout(7,7);
         setTitle("Connect Four");
         setSize(770,770);
@@ -28,7 +28,7 @@ public class ConnectFour extends JFrame{
         }
         for (int i = 6; i >= 0; i--) {
             for (int j = 0; j < 6; j++) {
-                pieces[i][j] = new JLabel(empty);
+                pieces[i][j] = new JLabel(redPiece);
                 add(pieces[i][j]);
             }
         }
