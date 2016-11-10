@@ -35,21 +35,25 @@ public class TestClass {
                 System.out.println();
             }
             win = CheckMethods.checkHorizontalWin(board);
-            System.out.println("Please enter a Column Player 2: ");
-            column = input.nextInt();
-
-            player = 2;
-
-            board = CheckMethods.playerCheck(board,column,player);
-
-            for (int i = 5; i >= 0; i--) {//Prints the board out in the console
-                for (int j = 0; j < 7; j++) {
-                    System.out.print(board[i][j] + " ");
-                }
-                System.out.println();
+            if(win == 'N'){
+                win = CheckMethods.checkVerticalWin();
             }
-            win = CheckMethods.checkHorizontalWin(board);
+            if(win == 'N'){
+                System.out.println("Please enter a Column Player 2: ");
+                column = input.nextInt();
 
+                player = 2;
+
+                board = CheckMethods.playerCheck(board,column,player);
+
+                for (int i = 5; i >= 0; i--) {//Prints the board out in the console
+                    for (int j = 0; j < 7; j++) {
+                        System.out.print(board[i][j] + " ");
+                    }
+                    System.out.println();
+                }
+                win = CheckMethods.checkHorizontalWin(board);
+            }
         }while(win == 'N');
         if(win == 'Y')
         {
