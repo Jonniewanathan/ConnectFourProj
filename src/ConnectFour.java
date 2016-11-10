@@ -9,23 +9,26 @@ public class ConnectFour extends JFrame{
 
     private JButton[] colButtons = new JButton[7];
     private JLabel[][] pieces = new JLabel[7][6];
-    GridLayout grid = new GridLayout(7,7);
+
+
     public static void main(String[] args) {
         new ConnectFour();
     }
     public ConnectFour()
     {
+        ImageIcon redPiece = new ImageIcon("images/redPiece100.png");
+        GridLayout grid = new GridLayout(7,7);
         setTitle("Connect Four");
+        setSize(770,770);
         setLayout(grid);
-        setSize(700,700);
-        for (int i = 0; i < colButtons.length; i++) {
-                colButtons[i] = new JButton("Column " + i);
-                add(colButtons[i]);
 
+        for (int i = 0; i < colButtons.length; i++) {
+                colButtons[i] = new JButton("Column " + (i+1));
+                add(colButtons[i]);
         }
-        for (int i = 0; i < 7; i++) {
+        for (int i = 6; i >= 0; i--) {
             for (int j = 0; j < 6; j++) {
-                pieces[i][j] = new JLabel(i + " " + j);
+                pieces[i][j] = new JLabel(empty);
                 add(pieces[i][j]);
             }
         }
