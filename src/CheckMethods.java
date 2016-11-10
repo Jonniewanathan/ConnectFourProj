@@ -85,7 +85,7 @@ public class CheckMethods {
                     numOfYellow = 0;
                 }
                 if (numOfYellow == 4) {
-                    return 'B';
+                    return 'Y';
                 }
                 if (numOfRed == 4) {
                     return 'R';
@@ -93,6 +93,75 @@ public class CheckMethods {
             }
             numOfRed = 0;
             numOfYellow = 0;
+        }
+        return 'N';
+    }
+    public static char checkDiagonal1Win(int[][]board) {
+        int startRow = 0;
+        int startColumn = 0;
+        int column = 0;
+        int row = 0;
+        int numOfYellow = 0;
+        int numOfRed = 0;
+        //algorithm to find 4 in a row diagonal up to the right/down to the left
+
+        for (int i = 0; i < 7; i++) {
+            do {
+                column = 0;
+                row = 0;
+                if(i == 1)
+                {
+                    column = 1;
+                }
+                if(i == 2)
+                {
+                    column = 2;
+                }
+                if(i == 3)
+                {
+                    column = 3;
+                }
+                if(i == 4)
+                {
+                    row = 1;
+                }
+                if(i == 5)
+                {
+                    row = 2;
+                }
+                for (int j = 0; j < 4; j++) {
+                    if (j == 0) {
+                        column += startColumn;
+                        row += startRow;
+                    }
+                    if (board[row][column] == 2) {
+                        numOfYellow++;
+                        numOfRed = 0;
+                    }
+                    if (board[row][column] == 3) {
+                        numOfRed++;
+                        numOfYellow = 0;
+                    }
+                    if (board[row][column] == 1) {
+                        numOfRed = 0;
+                        numOfYellow = 0;
+                    }
+                    if (numOfYellow == 4) {
+                        return 'Y';
+                    }
+                    if (numOfRed == 4) {
+                        return 'R';
+                    }
+                    column++;
+                    row++;
+                }
+                startColumn++;
+                startRow++;
+                numOfRed = 0;
+                numOfYellow = 0;
+            } while (row < 6 && column < 7);
+            startColumn = 0;
+            startRow = 0;
         }
         return 'N';
     }
