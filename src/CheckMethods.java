@@ -2,6 +2,10 @@
  * Created by jonathan on 09/11/2016.
  */
 public class CheckMethods {
+    private CheckMethods()
+    {
+
+    }
 
     public static int[][] playerCheck (int[][] board,int column,int player)
     {
