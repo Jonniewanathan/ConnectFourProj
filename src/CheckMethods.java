@@ -34,6 +34,21 @@ public class CheckMethods {
 
         return board;
     }
+    public static char checkWin(int[][] board){
+        char win = 'N';
+
+        win = CheckMethods.checkHorizontalWin(board);
+        if(win == 'N'){
+            win = CheckMethods.checkVerticalWin(board);
+            if(win == 'N'){
+                win = CheckMethods.checkDiagonal1Win(board);
+                if(win == 'N'){
+                    win = CheckMethods.checkDiagonal2Win(board);
+                }
+            }
+        }
+        return win;
+    }
     public static char checkHorizontalWin(int[][] board)
     {
         int numOfYellow = 0;

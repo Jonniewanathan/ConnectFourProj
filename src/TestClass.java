@@ -34,16 +34,8 @@ public class TestClass {
                 }
                 System.out.println();
             }
-            win = CheckMethods.checkHorizontalWin(board);
-            if(win == 'N'){
-                win = CheckMethods.checkVerticalWin(board);
-                if(win == 'N'){
-                    win = CheckMethods.checkDiagonal1Win(board);
-                    if(win == 'N'){
-                        win = CheckMethods.checkDiagonal2Win(board);
-                    }
-                }
-            }
+            win = CheckMethods.checkWin(board);
+
             if(win == 'N'){
                 System.out.println("Please enter a Column Player 2: ");
                 column = input.nextInt();
@@ -58,18 +50,10 @@ public class TestClass {
                     }
                     System.out.println();
                 }
-                win = CheckMethods.checkHorizontalWin(board);
-                if(win == 'N'){
-                    win = CheckMethods.checkVerticalWin(board);
-                    if(win == 'N'){
-                        win = CheckMethods.checkDiagonal1Win(board);
-                        if(win == 'N'){
-                            win = CheckMethods.checkDiagonal2Win(board);
-                        }
-                    }
-                }
+                win = CheckMethods.checkWin(board);
             }
         }while(win == 'N');
+
         if(win == 'Y')
         {
             System.out.println("Yellow Wins");
