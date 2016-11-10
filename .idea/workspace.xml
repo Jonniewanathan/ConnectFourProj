@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="86597530-ea28-4533-8b6c-edf8a6294636" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ConnectFourProj/CheckMethods.class" afterPath="$PROJECT_DIR$/out/production/ConnectFourProj/CheckMethods.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/CheckMethods.java" afterPath="$PROJECT_DIR$/src/CheckMethods.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/TestClass.java" afterPath="$PROJECT_DIR$/src/TestClass.java" />
     </list>
@@ -31,8 +29,8 @@
       <file leaf-file-name="TestClass.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/TestClass.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5947826">
-              <caret line="42" column="13" selection-start-line="42" selection-start-column="13" selection-end-line="42" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.5252174">
+              <caret line="45" column="13" selection-start-line="45" selection-start-column="13" selection-end-line="45" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -42,7 +40,7 @@
         <entry file="file://$PROJECT_DIR$/src/CheckMethods.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="95" column="9" selection-start-line="95" selection-start-column="9" selection-end-line="95" selection-end-column="9" />
+              <caret line="167" column="29" selection-start-line="167" selection-start-column="29" selection-end-line="167" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -535,15 +533,15 @@
     <entry file="file://$PROJECT_DIR$/src/CheckMethods.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="95" column="9" selection-start-line="95" selection-start-column="9" selection-end-line="95" selection-end-column="9" />
+          <caret line="167" column="29" selection-start-line="167" selection-start-column="29" selection-end-line="167" selection-end-column="29" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/TestClass.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5947826">
-          <caret line="42" column="13" selection-start-line="42" selection-start-column="13" selection-end-line="42" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.5252174">
+          <caret line="45" column="13" selection-start-line="45" selection-start-column="13" selection-end-line="45" selection-end-column="13" />
           <folding />
         </state>
       </provider>

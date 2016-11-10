@@ -39,6 +39,9 @@ public class TestClass {
                 win = CheckMethods.checkVerticalWin(board);
                 if(win == 'N'){
                     win = CheckMethods.checkDiagonal1Win(board);
+                    if(win == 'N'){
+                        win = CheckMethods.checkDiagonal2Win(board);
+                    }
                 }
             }
             if(win == 'N'){
@@ -60,6 +63,9 @@ public class TestClass {
                     win = CheckMethods.checkVerticalWin(board);
                     if(win == 'N'){
                         win = CheckMethods.checkDiagonal1Win(board);
+                        if(win == 'N'){
+                            win = CheckMethods.checkDiagonal2Win(board);
+                        }
                     }
                 }
             }
