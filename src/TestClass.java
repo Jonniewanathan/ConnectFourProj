@@ -36,7 +36,7 @@ public class TestClass {
             }
             win = CheckMethods.checkHorizontalWin(board);
             if(win == 'N'){
-                win = CheckMethods.checkVerticalWin();
+                win = CheckMethods.checkVerticalWin(board);
             }
             if(win == 'N'){
                 System.out.println("Please enter a Column Player 2: ");
@@ -53,6 +53,9 @@ public class TestClass {
                     System.out.println();
                 }
                 win = CheckMethods.checkHorizontalWin(board);
+                if(win == 'N'){
+                    win = CheckMethods.checkVerticalWin(board);
+                }
             }
         }while(win == 'N');
         if(win == 'Y')
