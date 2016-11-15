@@ -6,6 +6,7 @@
     import java.awt.*;
     import java.awt.event.ActionEvent;
     import java.awt.event.ActionListener;
+    import java.util.concurrent.TimeUnit;
 
 public class ConnectFour extends JFrame{
 
@@ -167,6 +168,9 @@ public class ConnectFour extends JFrame{
         CheckMethods.checkWinPane(board);
         if(computer ==true)
         {
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            }catch (Exception e){}
             setColour(comp.play(),board,2);
         }
         CheckMethods.checkWinPane(board);
