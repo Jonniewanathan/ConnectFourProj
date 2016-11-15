@@ -6,6 +6,8 @@
     import java.awt.*;
     import java.awt.event.ActionEvent;
     import java.awt.event.ActionListener;
+    import java.util.concurrent.Executors;
+    import java.util.concurrent.ScheduledExecutorService;
     import java.util.concurrent.TimeUnit;
 
 public class ConnectFour extends JFrame{
@@ -156,7 +158,7 @@ public class ConnectFour extends JFrame{
     public void buttonPressed(int col,boolean computer)
     {
         Computer comp = new Computer ("Computer",0);
-        if(computer == false)
+        if(!computer)
         {
             setColour(col,board,player);
             switchUsers();
@@ -166,13 +168,18 @@ public class ConnectFour extends JFrame{
             setColour(col,board,1);
         }
         CheckMethods.checkWinPane(board);
-        if(computer ==true)
+        if(computer)
         {
-            try {
-                TimeUnit.SECONDS.sleep(1);
-            }catch (Exception e){}
             setColour(comp.play(),board,2);
         }
+//        try {
+//            if(computer)
+//            {
+//                TimeUnit.SECONDS.sleep(1);
+//                setColour(comp.play(),board,2);
+//            }
+//        }catch (InterruptedException e){}
+
         CheckMethods.checkWinPane(board);
     }
     public void switchUsers()

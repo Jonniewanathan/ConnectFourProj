@@ -1,9 +1,12 @@
+
 import javax.swing.*;
 
 /**
  * Created by jonathan on 09/11/2016.
  */
-public class CheckMethods {
+
+
+public class CheckMethods{
     private CheckMethods()
     {
 
@@ -39,20 +42,12 @@ public class CheckMethods {
     public static void checkWinPane(int[][] board){
         char win;
 
-        win = CheckMethods.checkHorizontalWin(board);
-        if(win == 'N'){
-            win = CheckMethods.checkVerticalWin(board);
-            if(win == 'N'){
-                win = CheckMethods.checkDiagonal1Win(board);
-                if(win == 'N'){
-                    win = CheckMethods.checkDiagonal2Win(board);
-                }
-            }
-        }
+        win = checkWin(board);
         if(win == 'Y')
         {
             JOptionPane.showMessageDialog(null,"Yellow Wins");
             System.exit(0);
+
         }
         if(win == 'R')
         {
@@ -73,14 +68,6 @@ public class CheckMethods {
                 }
             }
         }
-//        if(win == 'Y')
-//        {
-//            JOptionPane.showMessageDialog(null,"Yellow Wins");
-//        }
-//        if(win == 'R')
-//        {
-//            JOptionPane.showMessageDialog(null,"Red Wins");
-//        }
         return win;
     }
     public static char checkHorizontalWin(int[][] board)
