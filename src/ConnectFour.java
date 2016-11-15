@@ -25,12 +25,12 @@ public class ConnectFour extends JFrame{
         redPiece = new ImageIcon("./images/redPiece100.png");
         yellowPiece = new ImageIcon("./images/yellowPiece100.png");
         empty = new ImageIcon("./images/empty100.png");
-        FlowLayout flow = new FlowLayout(FlowLayout.CENTER);
-        GridLayout boardGrid = new GridLayout(6,7);
+        //FlowLayout flow = new FlowLayout(FlowLayout.CENTER);
+        GridLayout boardGrid = new GridLayout(7,7);
         JPanel cFBoard = new JPanel(boardGrid);
         setTitle("Connect Four");
         setSize(700,700);
-        setLayout(flow);
+        //setLayout(flow);
 
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 7; j++) {
@@ -39,7 +39,7 @@ public class ConnectFour extends JFrame{
         }
         for (int i = 0; i < colButtons.length; i++) {
                 colButtons[i] = new JButton("Column " + (i+1));
-                add(colButtons[i]);
+                cFBoard.add(colButtons[i]);
         }
         for (int i = 5; i >= 0; i--) {
             for (int j = 0; j < 7; j++) {
