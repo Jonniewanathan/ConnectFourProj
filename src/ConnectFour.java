@@ -13,6 +13,8 @@ public class ConnectFour extends JFrame{
     private JLabel[][] pieces = new JLabel[6][7];
     private int[][] board = new int[6][7];
     private int player = 1;
+    private boolean computer;
+    private int numPlayers;
     ImageIcon redPiece;
     ImageIcon yellowPiece;
     ImageIcon empty;
@@ -25,12 +27,12 @@ public class ConnectFour extends JFrame{
         redPiece = new ImageIcon("./images/redPiece100.png");
         yellowPiece = new ImageIcon("./images/yellowPiece100.png");
         empty = new ImageIcon("./images/empty100.png");
-        //FlowLayout flow = new FlowLayout(FlowLayout.CENTER);
-        GridLayout boardGrid = new GridLayout(7,7);
+        FlowLayout flow = new FlowLayout(FlowLayout.CENTER);
+        GridLayout boardGrid = new GridLayout(6,7);
         JPanel cFBoard = new JPanel(boardGrid);
         setTitle("Connect Four");
         setSize(700,700);
-        //setLayout(flow);
+        setLayout(flow);
 
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 7; j++) {
@@ -39,7 +41,7 @@ public class ConnectFour extends JFrame{
         }
         for (int i = 0; i < colButtons.length; i++) {
                 colButtons[i] = new JButton("Column " + (i+1));
-                cFBoard.add(colButtons[i]);
+                add(colButtons[i]);
         }
         for (int i = 5; i >= 0; i--) {
             for (int j = 0; j < 7; j++) {
@@ -55,7 +57,15 @@ public class ConnectFour extends JFrame{
         {
             colButtons[i].addActionListener(handler);
         }
-
+        numPlayers = JOptionPane.showConfirmDialog(null,"2 Player?");
+        if(numPlayers == JOptionPane.YES_OPTION)
+        {
+            computer = false;
+        }
+        else
+        {
+            computer = true;
+        }
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
@@ -66,7 +76,7 @@ public class ConnectFour extends JFrame{
             {
                 if(board[5][0] != 2 && board[5][0] != 3)
                 {
-                    buttonPressed(0);
+                    buttonPressed(0,computer);
                 }
 
             }
@@ -74,7 +84,7 @@ public class ConnectFour extends JFrame{
             {
                 if(board[5][1] != 2 && board[5][1] != 3)
                 {
-                    buttonPressed(1);
+                    buttonPressed(1,computer);
                 }
 
             }
@@ -82,35 +92,35 @@ public class ConnectFour extends JFrame{
             {
                 if(board[5][2] != 2 && board[5][2] != 3)
                 {
-                    buttonPressed(2);
+                    buttonPressed(2,computer);
                 }
             }
             if(e.getSource() == colButtons[3])
             {
                 if(board[5][3] != 2 && board[5][3] != 3)
                 {
-                    buttonPressed(3);
+                    buttonPressed(3,computer);
                 }
             }
             if(e.getSource() == colButtons[4])
             {
                 if(board[5][4] != 2 && board[5][4] != 3)
                 {
-                    buttonPressed(4);
+                    buttonPressed(4,computer);
                 }
             }
             if(e.getSource() == colButtons[5])
             {
                 if(board[5][5] != 2 && board[5][5] != 3)
                 {
-                    buttonPressed(5);
+                    buttonPressed(5,computer);
                 }
             }
             if(e.getSource() == colButtons[6])
             {
                 if(board[5][6] != 2 && board[5][6] != 3)
                 {
-                    buttonPressed(6);
+                    buttonPressed(6,computer);
                 }
             }
         }
@@ -142,9 +152,27 @@ public class ConnectFour extends JFrame{
         }
 
     }
-    public void buttonPressed(int col)
+    public void buttonPressed(int col,boolean computer)
     {
-        setColour(col,board,player);
+        Computer comp = new Computer ("Computer",0);
+        if(computer == false)
+        {
+            setColour(col,board,player);
+            switchUsers();
+        }
+        else
+        {
+            setColour(col,board,1);
+        }
+        CheckMethods.checkWinPane(board);
+        if(computer ==true)
+        {
+            setColour(comp.play(),board,2);
+        }
+        CheckMethods.checkWinPane(board);
+    }
+    public void switchUsers()
+    {
         if(player == 1)
         {
             player = 2;
@@ -153,6 +181,5 @@ public class ConnectFour extends JFrame{
         {
             player = 1;
         }
-        CheckMethods.checkWinPane(board);
     }
 }
