@@ -12,89 +12,192 @@
 
 public class ConnectFour extends JFrame{
 
+    //Creating the column buttons
     private JButton[] colButtons = new JButton[7];
+
+    //Creating the playBoard on the gui
     private JLabel[][] pieces = new JLabel[6][7];
+
+    //Declaring the code for the 2d array
     private int[][] board;
+
+    //Player number either player one or two
     private int player = 1;
+
+    //Boolean to tell the program if it's against computer or not
     private boolean computer;
     private int numPlayers;
-    ImageIcon redPiece;
-    ImageIcon yellowPiece;
-    ImageIcon empty;
 
+    private String p1Name;
+    private String p2Name;
+
+    //Menu Buttons
+    private JButton newGame;
+    private JButton newPlayer;
+    private JButton highScore;
+    private JButton resetGame;
+
+    //Image icons for my pieces
+    private ImageIcon redPiece;
+    private ImageIcon yellowPiece;
+    private ImageIcon empty;
+
+    //JLabels to print the Name, Wins and Loses to the gui;
+    private JLabel pName;
+    private JLabel pl2Name;
+    private JLabel pWin;
+    private JLabel p2Win;
+    private JLabel pLoses;
+    private JLabel p2Loses;
+
+    //JPanel to place Components on the JFrame
+    private JPanel cFBoard;
+    private JPanel colButton;
+    private JPanel score;
+    private JPanel menuButtons;
+
+    //Grid Layouts
+    private GridLayout boardGrid;
+    private GridLayout scoreGrid;
+    private GridLayout menuGrid;
+
+    //Border Layouts
+    private BorderLayout border;
+
+    //Flow Layout
+    private FlowLayout flow;
+
+    //Dimension sizes
+    private Dimension score_size;
+
+    //Player Object
+    private Player p1;
+    private Player p2;
+    private Computer comp;
+    private Player temp;
+
+
+    //Creating the ButtonHandler
+    private ButtonEventHandler handler;
+
+    //Main
     public static void main(String[] args) {
         new ConnectFour();
     }
+    //GUI Constructor
     public ConnectFour()
     {
-        String name;
+        //ImageIcons
         redPiece = new ImageIcon("./images/redPiece100.png");
         yellowPiece = new ImageIcon("./images/yellowPiece100.png");
         //yellowPiece = new ImageIcon("./images/ger100.png");
         empty = new ImageIcon("./images/empty100.png");
+
+        //Dimension
+        score_size = new  Dimension(100,700);
+
+        //Creating the board for use in calculations
         Board boardObj = new Board(6,7);
-        FlowLayout flow = new FlowLayout();
-        BorderLayout border = new BorderLayout();
-        GridLayout boardGrid = new GridLayout(6,7);
-        JPanel cFBoard = new JPanel(boardGrid);
-        JPanel colButton = new JPanel(flow);
-        JPanel score = new JPanel(flow);
-        JLabel pName = new JLabel();
-        JLabel pWin = new JLabel();
-        JLabel pLoses = new JLabel()
+
+        //FlowLayout
+        flow = new FlowLayout();
+
+        //BorderLayout
+        border = new BorderLayout();
+
+        //Grid Layouts
+        boardGrid = new GridLayout(6,7);
+        scoreGrid = new GridLayout(6,1);
+        menuGrid = new GridLayout(4,1);
+
+        //JPanels
+        cFBoard = new JPanel(boardGrid);
+        colButton = new JPanel(flow);
+        score = new JPanel(scoreGrid);
+        menuButtons = new JPanel(menuGrid);
+
+        //JLabels
+        pName = new JLabel();
+        pWin = new JLabel();
+        pLoses = new JLabel();
+        pl2Name = new JLabel();
+        p2Win = new JLabel();
+        p2Loses = new JLabel();
+
+        //Setting the size of the score panel
+        score.setPreferredSize(score_size);
+
+        //setting up the JFrame
         setTitle("Connect Four");
-        setSize(800,700);
+        setSize(900,700);
         setLayout(border);
 
-        board = boardObj.getBoard();
+        //Adding the menu buttons
+        addMenuButtons();
 
-        for (int i = 0; i < colButtons.length; i++) {
+        board = boardObj.getBoard();
+        comp = new Computer();
+
+        //Adding the column buttons to the JPanel colButton
+        for (int i = 0; i < colButtons.length; i++)
+        {
                 colButtons[i] = new JButton("Column " + (i+1));
                 colButton.add(colButtons[i]);
         }
-        for (int i = 5; i >= 0; i--) {
-            for (int j = 0; j < 7; j++) {
-                pieces[i][j] = new JLabel(empty);
-                cFBoard.add(pieces[i][j]);
-            }
-        }
-        name = JOptionPane.showInputDialog("Please enter your name");
-        Player p1 = new Player(name);
-        pName.setText(p1.getName());
-        pWin.setText(p1.getWin());
-        pLoses.setText(p1.getLoses());
-        score.add(pName);
-        score.add(pWin);
-        score.add(pLoses);
-        add(pName,BorderLayout.EAST);
-        add(pWin,BorderLayout.EAST);
-        add(pLoses,BorderLayout.EAST);
-        add(colButton,BorderLayout.NORTH);
-        cFBoard.setBackground(Color.BLUE);
-        add(cFBoard,BorderLayout.CENTER);
-        ButtonEventHandler handler = new ButtonEventHandler();
 
-        for (int i = 0;i < colButtons.length;i++)
-        {
-            colButtons[i].addActionListener(handler);
-        }
-        numPlayers = JOptionPane.showConfirmDialog(null,"2 Player?");
-        if(numPlayers == JOptionPane.YES_OPTION)
-        {
-            computer = false;
-        }
-        else
-        {
-            computer = true;
-        }
+        cFBoard.setBackground(Color.BLUE);
+        emptyBoard();
+        //adding the panels to the the JFrame
+        addScoreBoard();
+        add(colButton,BorderLayout.NORTH);
+        add(cFBoard,BorderLayout.CENTER);
+
+        //creating the button event handler
+        handler = new ButtonEventHandler();
+
+
+
+        //adding the action listener to the menu buttons
+        newGame.addActionListener(handler);
+        newPlayer.addActionListener(handler);
+        highScore.addActionListener(handler);
+        resetGame.addActionListener(handler);
+
+        //forces the window to not be resizeable
         setResizable(false);
+
+        //makes the gui visible
         setVisible(true);
+
+        //Setting the close operation
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
     private class ButtonEventHandler implements ActionListener
     {
-        public void actionPerformed(ActionEvent e) {
-            if(e.getSource() == colButtons[0])
+        public void actionPerformed(ActionEvent e)
+        {
+            if(e.getSource() == newGame)
+            {
+                numPlayers = JOptionPane.showConfirmDialog(null,"2 Player?");
+                if(numPlayers == JOptionPane.YES_OPTION)
+                {
+                    computer = false;
+                    //scoreGrid.setRows(6);
+                }
+                else
+                {
+                    computer = true;
+                    //scoreGrid.setRows(3);
+                }
+                addPlayer();
+                colButtonsListener();
+            }
+            else if(e.getSource() == resetGame)
+            {
+                resetBoard();
+                getScores();
+            }
+            else if(e.getSource() == colButtons[0])
             {
                 if(board[5][0] != 2 && board[5][0] != 3)
                 {
@@ -102,7 +205,7 @@ public class ConnectFour extends JFrame{
                 }
 
             }
-            if(e.getSource() == colButtons[1])
+            else if(e.getSource() == colButtons[1])
             {
                 if(board[5][1] != 2 && board[5][1] != 3)
                 {
@@ -110,41 +213,161 @@ public class ConnectFour extends JFrame{
                 }
 
             }
-            if(e.getSource() == colButtons[2])
+            else if(e.getSource() == colButtons[2])
             {
                 if(board[5][2] != 2 && board[5][2] != 3)
                 {
                     buttonPressed(2,computer);
                 }
             }
-            if(e.getSource() == colButtons[3])
+            else if(e.getSource() == colButtons[3])
             {
                 if(board[5][3] != 2 && board[5][3] != 3)
                 {
                     buttonPressed(3,computer);
                 }
             }
-            if(e.getSource() == colButtons[4])
+            else if(e.getSource() == colButtons[4])
             {
                 if(board[5][4] != 2 && board[5][4] != 3)
                 {
                     buttonPressed(4,computer);
                 }
             }
-            if(e.getSource() == colButtons[5])
+            else if(e.getSource() == colButtons[5])
             {
                 if(board[5][5] != 2 && board[5][5] != 3)
                 {
                     buttonPressed(5,computer);
                 }
             }
-            if(e.getSource() == colButtons[6])
+            else if(e.getSource() == colButtons[6])
             {
                 if(board[5][6] != 2 && board[5][6] != 3)
                 {
                     buttonPressed(6,computer);
                 }
             }
+        }
+    }
+    public void addMenuButtons()
+    {
+        newGame = new JButton("New Game");
+        newPlayer = new JButton("New Player");
+        highScore = new JButton("High Score");
+        resetGame = new JButton("Reset Board");
+        menuButtons.add(newGame);
+        menuButtons.add(newPlayer);
+        menuButtons.add(highScore);
+        menuButtons.add(resetGame);
+        menuButtons.setPreferredSize(score_size);
+        add(menuButtons,BorderLayout.WEST);
+    }
+    public void addPlayer()
+    {
+        if(numPlayers == JOptionPane.YES_OPTION)
+        {
+            p1Name = JOptionPane.showInputDialog("Please enter your name");
+            p1 = new Player(p1Name);
+            pName.setText("Name: " + p1.getName());
+            pWin.setText("Win: " + Integer.toString(p1.getWin()));
+            pLoses.setText("Loses: " + Integer.toString(p1.getLoses()));
+
+            p2Name = JOptionPane.showInputDialog("Please enter your name");
+            p2 = new Player(p2Name);
+            pl2Name.setText("Name: " + p2.getName());
+            p2Win.setText("Win: " + Integer.toString(p2.getWin()));
+            p2Loses.setText("Loses: " + Integer.toString(p2.getLoses()));
+        }
+        else
+        {
+            p1Name = JOptionPane.showInputDialog("Please enter your name");
+            p1 = new Player(p1Name);
+            pName.setText("Name: " + p1.getName());
+            pWin.setText("Win: " + Integer.toString(p1.getWin()));
+            pLoses.setText("Loses: " + Integer.toString(p1.getLoses()));
+        }
+    }
+    public void colButtonsListener()
+    {
+        for (int i = 0;i < colButtons.length;i++)
+        {
+            colButtons[i].addActionListener(handler);
+        }
+    }
+    public void emptyBoard()
+    {
+        for (int i = 5; i >= 0; i--)
+        {
+            for (int j = 0; j < 7; j++)
+            {
+                pieces[i][j] = new JLabel(empty);
+                cFBoard.add(pieces[i][j]);
+            }
+        }
+    }
+    //Resets back to start
+    public void resetBoard()
+    {
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 7; j++) {
+                if(board[i][j] != 1)
+                {
+                    board[i][j] = 1;
+                    pieces[i][j].setIcon(empty);
+                }
+            }
+        }
+
+    }
+    public void addScoreBoard()
+    {
+        score.add(pName);
+        score.add(pWin);
+        score.add(pLoses);
+        score.add(pl2Name);
+        score.add(p2Win);
+        score.add(p2Loses);
+        add(score,BorderLayout.EAST);
+        if(numPlayers == JOptionPane.YES_OPTION)
+        {
+            pName.setVisible(true);
+            pWin.setVisible(true);
+            pLoses.setVisible(true);
+            pl2Name.setVisible(true);
+            p2Win.setVisible(true);
+            p2Loses.setVisible(true);
+        }
+        else
+        {
+            pName.setVisible(true);
+            pWin.setVisible(true);
+            pLoses.setVisible(true);
+            pl2Name.setVisible(false);
+            p2Win.setVisible(false);
+            p2Loses.setVisible(false);
+        }
+    }
+    public void getScores()
+    {
+        if(numPlayers == JOptionPane.YES_OPTION)
+        {
+            pWin.setText("Win: " + Integer.toString(p1.getWin()));
+            pLoses.setText("Loses: " + Integer.toString(p1.getLoses()));
+            pWin.repaint();
+            pLoses.repaint();
+
+            p2Win.setText("Win: " + Integer.toString(p2.getWin()));
+            p2Loses.setText("Loses: " + Integer.toString(p2.getLoses()));
+            p2Win.repaint();
+            p2Loses.repaint();
+        }
+        else
+        {
+            pWin.setText("Win: " + Integer.toString(p1.getWin()));
+            pLoses.setText("Loses: " + Integer.toString(p1.getLoses()));
+            pWin.repaint();
+            pLoses.repaint();
         }
     }
     public void setColour(int column, int[][] board,int player)
@@ -165,33 +388,42 @@ public class ConnectFour extends JFrame{
                 pieceNum = 3;
                 playerIcon = redPiece;
             }
-                if(board[num][column] == 1){//checking if a piece exists in the spot
-                    board[num][column] = pieceNum;//adding a piece to the connect four board
-                    pieces[num][column].setIcon(playerIcon);
-                    valid = true;
-                }
+            //checking if a piece exists in the spot
+            if(board[num][column] == 1)
+            {
+                board[num][column] = pieceNum;//adding a piece to the connect four board
+                pieces[num][column].setIcon(playerIcon);
+                valid = true;
+            }
             num++;
         }
-
     }
     public void buttonPressed(int col,boolean computer)
     {
-        Computer comp = new Computer ();
-        if(!computer)
+        getScores();
+        if(board[5][col] != 2 || board[5][col] != 3)
         {
-            setColour(col,board,player);
-            switchUsers();
+            if(!computer)
+            {
+                setColour(col,board,player);
+                switchUsers();
+                temp = p2;
+                CheckMethods.checkWinPane(board,p1,temp);
+            }
+            else
+            {
+                setColour(col,board,1);
+                temp = comp;
+
+                CheckMethods.checkWinPane(board,p1,temp);
+
+                if(computer && CheckMethods.checkWin(board) != 'Y')
+                {
+                    setColour(comp.play(),board,2);
+                    CheckMethods.checkWinPane(board,p1,temp);
+                }
+            }
         }
-        else
-        {
-            setColour(col,board,1);
-        }
-        CheckMethods.checkWinPane(board);
-        if(computer)
-        {
-            setColour(comp.play(),board,2);
-        }
-        CheckMethods.checkWinPane(board);
     }
     public void switchUsers()
     {

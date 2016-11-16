@@ -3,36 +3,44 @@
  */
 public class Player {
     private String name;
-    private static int win;
-    private static int loses;
+    private int win;
+    private int loses;
 
-    Player(){
+    Player()
+    {
         this("none");
     }
     Player(String name){
         setName(name);
-        win = 0;
-        loses = 0;
+        setWin(0);
+        setLoses(0);
     }
-    public void setName(String name){
+    public void setName(String name)
+    {
         this.name = name;
     }
-    public static void setWin(int win2){
-        win += win2;
+    public void setWin(int win)
+    {
+        this.win += win;
     }
-    public static void setLoses(int loses2){
-        loses += loses2;
+    public void setLoses(int loses)
+    {
+        this.loses += loses;
     }
-    public String getName(){
+    public String getName()
+    {
         return this.name;
     }
-    public int getWin(){
-        return win;
+    public int getWin()
+    {
+        return this.win;
     }
-    public int getLoses(){
-        return loses;
+    public int getLoses()
+    {
+        return this.loses;
     }
-    public String toString(){
+    public String toString()
+    {
         return "Name: " + getName() + "\n" + "Win: " + getWin() + "\n" + "Loses: " + getLoses();
     }
 

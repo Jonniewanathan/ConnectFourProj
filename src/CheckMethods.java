@@ -6,7 +6,7 @@ import javax.swing.*;
  */
 
 
-public class CheckMethods{
+public class CheckMethods extends Computer{
     private CheckMethods()
     {
 
@@ -39,20 +39,21 @@ public class CheckMethods{
 
         return board;
     }
-    public static void checkWinPane(int[][] board){
+    public static void checkWinPane(int[][] board, Player player1,Player player2){
         char win;
 
         win = checkWin(board);
         if(win == 'Y')
         {
-            JOptionPane.showMessageDialog(null,"Yellow Wins");
-            System.exit(0);
-
+            player1.setWin(1);
+            JOptionPane.showMessageDialog(null,"Yellow Wins " + player1.getWin());
+            player2.setLoses(1);
         }
         if(win == 'R')
         {
-            JOptionPane.showMessageDialog(null,"Red Wins");
-            System.exit(0);
+            player2.setWin(1);
+            JOptionPane.showMessageDialog(null,"Red Wins" + player2.getWin());
+            player1.setLoses(1);
         }
     }
     public static char checkWin(int[][] board){

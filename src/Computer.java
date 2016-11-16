@@ -8,7 +8,8 @@ public class Computer extends Player{
         setWin(0);
         setLoses(0);
     }
-    public int play(){
+    public int play()
+    {
         return (int) (Math.random()*6)+1;
     }
 
