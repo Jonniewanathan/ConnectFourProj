@@ -6,14 +6,11 @@ public class Board {
     private int width;
     private int[][] board;
 
-    Board()
-    {
-        this(1,1);
-    }
     Board(int height,int width)
     {
         setHeight(height);
         setWidth(width);
+        createBoard();
     }
     public void setHeight(int height)
     {
@@ -34,13 +31,12 @@ public class Board {
         return width;
     }
 
-    public int[][] createBoard()
+    public void createBoard()
     {
-
-        board = new int[getWidth()][getHeight()];
-        return board;
+        board = new int[getHeight()][getWidth()];
+        resetBoard();
     }
-    public void setBoard()
+    public void resetBoard()
     {
         int[][] board = getBoard();
         for (int i = 0; i < getHeight(); i++) {
@@ -51,7 +47,6 @@ public class Board {
     }
     public int[][] getBoard()
     {
-        createBoard();
         return board;
     }
 }

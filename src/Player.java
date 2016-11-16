@@ -3,29 +3,37 @@
  */
 public class Player {
     private String name;
-    private static int score;
+    private static int win;
+    private static int loses;
 
     Player(){
-        this("none",0);
+        this("none");
     }
-    Player(String name,int score){
+    Player(String name){
         setName(name);
-        setScore(score);
+        win = 0;
+        loses = 0;
     }
     public void setName(String name){
         this.name = name;
     }
-    public static void setScore(int score2){
-        score += score2;
+    public static void setWin(int win2){
+        win += win2;
+    }
+    public static void setLoses(int loses2){
+        loses += loses2;
     }
     public String getName(){
         return this.name;
     }
-    public int getScore(){
-        return score;
+    public int getWin(){
+        return win;
+    }
+    public int getLoses(){
+        return loses;
     }
     public String toString(){
-        return "Name: " + this.name + "\n" + "Score" + this.score;
+        return "Name: " + getName() + "\n" + "Win: " + getWin() + "\n" + "Loses: " + getLoses();
     }
 
 }

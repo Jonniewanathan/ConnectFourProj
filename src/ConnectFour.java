@@ -14,7 +14,7 @@ public class ConnectFour extends JFrame{
 
     private JButton[] colButtons = new JButton[7];
     private JLabel[][] pieces = new JLabel[6][7];
-    private int[][] board = new int[6][7];
+    private int[][] board;
     private int player = 1;
     private boolean computer;
     private int numPlayers;
@@ -27,25 +27,30 @@ public class ConnectFour extends JFrame{
     }
     public ConnectFour()
     {
+        String name;
         redPiece = new ImageIcon("./images/redPiece100.png");
         yellowPiece = new ImageIcon("./images/yellowPiece100.png");
         //yellowPiece = new ImageIcon("./images/ger100.png");
         empty = new ImageIcon("./images/empty100.png");
-        FlowLayout flow = new FlowLayout(FlowLayout.CENTER);
+        Board boardObj = new Board(6,7);
+        FlowLayout flow = new FlowLayout();
+        BorderLayout border = new BorderLayout();
         GridLayout boardGrid = new GridLayout(6,7);
         JPanel cFBoard = new JPanel(boardGrid);
+        JPanel colButton = new JPanel(flow);
+        JPanel score = new JPanel(flow);
+        JLabel pName = new JLabel();
+        JLabel pWin = new JLabel();
+        JLabel pLoses = new JLabel()
         setTitle("Connect Four");
-        setSize(700,700);
-        setLayout(flow);
+        setSize(800,700);
+        setLayout(border);
 
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 7; j++) {
-                board[i][j] = 1;
-            }
-        }
+        board = boardObj.getBoard();
+
         for (int i = 0; i < colButtons.length; i++) {
                 colButtons[i] = new JButton("Column " + (i+1));
-                add(colButtons[i]);
+                colButton.add(colButtons[i]);
         }
         for (int i = 5; i >= 0; i--) {
             for (int j = 0; j < 7; j++) {
@@ -53,8 +58,20 @@ public class ConnectFour extends JFrame{
                 cFBoard.add(pieces[i][j]);
             }
         }
+        name = JOptionPane.showInputDialog("Please enter your name");
+        Player p1 = new Player(name);
+        pName.setText(p1.getName());
+        pWin.setText(p1.getWin());
+        pLoses.setText(p1.getLoses());
+        score.add(pName);
+        score.add(pWin);
+        score.add(pLoses);
+        add(pName,BorderLayout.EAST);
+        add(pWin,BorderLayout.EAST);
+        add(pLoses,BorderLayout.EAST);
+        add(colButton,BorderLayout.NORTH);
         cFBoard.setBackground(Color.BLUE);
-        add(cFBoard);
+        add(cFBoard,BorderLayout.CENTER);
         ButtonEventHandler handler = new ButtonEventHandler();
 
         for (int i = 0;i < colButtons.length;i++)
@@ -159,7 +176,7 @@ public class ConnectFour extends JFrame{
     }
     public void buttonPressed(int col,boolean computer)
     {
-        Computer comp = new Computer ("Computer",0);
+        Computer comp = new Computer ();
         if(!computer)
         {
             setColour(col,board,player);
@@ -174,14 +191,6 @@ public class ConnectFour extends JFrame{
         {
             setColour(comp.play(),board,2);
         }
-//        try {
-//            if(computer)
-//            {
-//                TimeUnit.SECONDS.sleep(1);
-//                setColour(comp.play(),board,2);
-//            }
-//        }catch (InterruptedException e){}
-
         CheckMethods.checkWinPane(board);
     }
     public void switchUsers()
