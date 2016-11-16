@@ -3,7 +3,7 @@
  */
 public class Player {
     private String name;
-    private int score;
+    private static int score;
 
     Player(){
         this("none",0);
@@ -15,14 +15,14 @@ public class Player {
     public void setName(String name){
         this.name = name;
     }
-    public void setScore(int score){
-        this.score = score;
+    public static void setScore(int score2){
+        score += score2;
     }
     public String getName(){
         return this.name;
     }
     public int getScore(){
-        return this.score;
+        return score;
     }
     public String toString(){
         return "Name: " + this.name + "\n" + "Score" + this.score;

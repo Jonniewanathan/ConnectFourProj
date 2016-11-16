@@ -20,6 +20,7 @@ public class Board {
         this.height = height;
     }
     public void setWidth(int width)
+
     {
         this.width = width;
     }

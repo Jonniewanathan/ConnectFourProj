@@ -29,6 +29,7 @@ public class ConnectFour extends JFrame{
     {
         redPiece = new ImageIcon("./images/redPiece100.png");
         yellowPiece = new ImageIcon("./images/yellowPiece100.png");
+        //yellowPiece = new ImageIcon("./images/ger100.png");
         empty = new ImageIcon("./images/empty100.png");
         FlowLayout flow = new FlowLayout(FlowLayout.CENTER);
         GridLayout boardGrid = new GridLayout(6,7);
@@ -69,6 +70,7 @@ public class ConnectFour extends JFrame{
         {
             computer = true;
         }
+        setResizable(false);
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
