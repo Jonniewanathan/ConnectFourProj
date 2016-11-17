@@ -11,7 +11,6 @@ public class CheckMethods extends Computer{
     {
 
     }
-
     public static int[][] playerCheck (int[][] board,int column,int player)
     {
         boolean valid = false;
@@ -46,13 +45,14 @@ public class CheckMethods extends Computer{
         if(win == 'Y')
         {
             player1.setWin(1);
-            JOptionPane.showMessageDialog(null,"Yellow Wins " + player1.getWin());
+            JOptionPane.showMessageDialog(null,"Yellow Wins ");
             player2.setLoses(1);
+
         }
         if(win == 'R')
         {
             player2.setWin(1);
-            JOptionPane.showMessageDialog(null,"Red Wins" + player2.getWin());
+            JOptionPane.showMessageDialog(null,"Red Wins");
             player1.setLoses(1);
         }
     }

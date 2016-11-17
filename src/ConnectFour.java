@@ -6,9 +6,6 @@
     import java.awt.*;
     import java.awt.event.ActionEvent;
     import java.awt.event.ActionListener;
-    import java.util.concurrent.Executors;
-    import java.util.concurrent.ScheduledExecutorService;
-    import java.util.concurrent.TimeUnit;
 
 public class ConnectFour extends JFrame{
 
@@ -25,7 +22,7 @@ public class ConnectFour extends JFrame{
     private int player = 1;
 
     //Boolean to tell the program if it's against computer or not
-    private boolean computer;
+    private boolean computer = false;
     private int numPlayers;
 
     private String p1Name;
@@ -132,10 +129,10 @@ public class ConnectFour extends JFrame{
         setSize(900,700);
         setLayout(border);
 
-        //Adding the menu buttons
-        addMenuButtons();
-
+        //Creates the board
         board = boardObj.getBoard();
+
+        //Creates the Computer Object
         comp = new Computer();
 
         //Adding the column buttons to the JPanel colButton
@@ -145,17 +142,25 @@ public class ConnectFour extends JFrame{
                 colButton.add(colButtons[i]);
         }
 
+
+        //sets the background of the board
         cFBoard.setBackground(Color.BLUE);
+
+        //Sets the board up for play
         emptyBoard();
-        //adding the panels to the the JFrame
+
+        //Adding the scoreboard panel
         addScoreBoard();
+
+        //Adding the menu buttons
+        addMenuButtons();
+
+        //adding the panels to the the JFrame
         add(colButton,BorderLayout.NORTH);
         add(cFBoard,BorderLayout.CENTER);
 
         //creating the button event handler
         handler = new ButtonEventHandler();
-
-
 
         //adding the action listener to the menu buttons
         newGame.addActionListener(handler);
@@ -176,32 +181,38 @@ public class ConnectFour extends JFrame{
     {
         public void actionPerformed(ActionEvent e)
         {
+            if(CheckMethods.checkWin(board) != 'N')
+            {
+                getScores();
+                removeColListener();
+            }
             if(e.getSource() == newGame)
             {
                 numPlayers = JOptionPane.showConfirmDialog(null,"2 Player?");
+                resetBoard();
                 if(numPlayers == JOptionPane.YES_OPTION)
                 {
                     computer = false;
-                    //scoreGrid.setRows(6);
+                    addPlayer();
+                    colButtonsListener();
                 }
-                else
+                else if(numPlayers == JOptionPane.NO_OPTION)
                 {
                     computer = true;
-                    //scoreGrid.setRows(3);
+                    addPlayer();
+                    colButtonsListener();
                 }
-                addPlayer();
-                colButtonsListener();
+                //colButtonsListener();
             }
             else if(e.getSource() == resetGame)
             {
                 resetBoard();
-                getScores();
             }
             else if(e.getSource() == colButtons[0])
             {
                 if(board[5][0] != 2 && board[5][0] != 3)
                 {
-                    buttonPressed(0,computer);
+                    buttonPressed(0);
                 }
 
             }
@@ -209,7 +220,7 @@ public class ConnectFour extends JFrame{
             {
                 if(board[5][1] != 2 && board[5][1] != 3)
                 {
-                    buttonPressed(1,computer);
+                    buttonPressed(1);
                 }
 
             }
@@ -217,35 +228,35 @@ public class ConnectFour extends JFrame{
             {
                 if(board[5][2] != 2 && board[5][2] != 3)
                 {
-                    buttonPressed(2,computer);
+                    buttonPressed(2);
                 }
             }
             else if(e.getSource() == colButtons[3])
             {
                 if(board[5][3] != 2 && board[5][3] != 3)
                 {
-                    buttonPressed(3,computer);
+                    buttonPressed(3);
                 }
             }
             else if(e.getSource() == colButtons[4])
             {
                 if(board[5][4] != 2 && board[5][4] != 3)
                 {
-                    buttonPressed(4,computer);
+                    buttonPressed(4);
                 }
             }
             else if(e.getSource() == colButtons[5])
             {
                 if(board[5][5] != 2 && board[5][5] != 3)
                 {
-                    buttonPressed(5,computer);
+                    buttonPressed(5);
                 }
             }
             else if(e.getSource() == colButtons[6])
             {
                 if(board[5][6] != 2 && board[5][6] != 3)
                 {
-                    buttonPressed(6,computer);
+                    buttonPressed(6);
                 }
             }
         }
@@ -318,7 +329,14 @@ public class ConnectFour extends JFrame{
                 }
             }
         }
-
+        removeColListener();
+    }
+    public void removeColListener()
+    {
+        for (int i = 0;i < colButtons.length;i++)
+        {
+            colButtons[i].removeActionListener(handler);
+        }
     }
     public void addScoreBoard()
     {
@@ -329,7 +347,7 @@ public class ConnectFour extends JFrame{
         score.add(p2Win);
         score.add(p2Loses);
         add(score,BorderLayout.EAST);
-        if(numPlayers == JOptionPane.YES_OPTION)
+        if(!computer)
         {
             pName.setVisible(true);
             pWin.setVisible(true);
@@ -348,6 +366,7 @@ public class ConnectFour extends JFrame{
             p2Loses.setVisible(false);
         }
     }
+    //Gets the scores for the particular player
     public void getScores()
     {
         if(numPlayers == JOptionPane.YES_OPTION)
@@ -362,7 +381,7 @@ public class ConnectFour extends JFrame{
             p2Win.repaint();
             p2Loses.repaint();
         }
-        else
+        else if(numPlayers == JOptionPane.NO_OPTION)
         {
             pWin.setText("Win: " + Integer.toString(p1.getWin()));
             pLoses.setText("Loses: " + Integer.toString(p1.getLoses()));
@@ -370,6 +389,7 @@ public class ConnectFour extends JFrame{
             pLoses.repaint();
         }
     }
+    //Sets the colour of the piece on the board
     public void setColour(int column, int[][] board,int player)
     {
         boolean valid = false;
@@ -378,6 +398,7 @@ public class ConnectFour extends JFrame{
         ImageIcon playerIcon = empty;
         while(!valid) {
             valid = false;
+            //Changing the Piece Colour depending on player
             if(player == 1)
             {
                 pieceNum = 2;
@@ -388,21 +409,19 @@ public class ConnectFour extends JFrame{
                 pieceNum = 3;
                 playerIcon = redPiece;
             }
+
             //checking if a piece exists in the spot
             if(board[num][column] == 1)
             {
                 board[num][column] = pieceNum;//adding a piece to the connect four board
-                pieces[num][column].setIcon(playerIcon);
+                pieces[num][column].setIcon(playerIcon);//Changing the image icon on the JPanel
                 valid = true;
             }
             num++;
         }
     }
-    public void buttonPressed(int col,boolean computer)
+    public void buttonPressed(int col)
     {
-        getScores();
-        if(board[5][col] != 2 || board[5][col] != 3)
-        {
             if(!computer)
             {
                 setColour(col,board,player);
@@ -410,7 +429,7 @@ public class ConnectFour extends JFrame{
                 temp = p2;
                 CheckMethods.checkWinPane(board,p1,temp);
             }
-            else
+            else if(computer)
             {
                 setColour(col,board,1);
                 temp = comp;
@@ -419,11 +438,21 @@ public class ConnectFour extends JFrame{
 
                 if(computer && CheckMethods.checkWin(board) != 'Y')
                 {
-                    setColour(comp.play(),board,2);
-                    CheckMethods.checkWinPane(board,p1,temp);
+                    int num;
+                    num = comp.play();
+
+                    while(board[5][num] == 2 || board[5][num] == 3)
+                    {
+                        num = comp.play();
+                    }
+                    if(board[5][num] != 2 || board[5][num] != 3)
+                    {
+                        setColour(num,board,2);
+                        CheckMethods.checkWinPane(board,p1,temp);
+                    }
+
                 }
             }
-        }
     }
     public void switchUsers()
     {
