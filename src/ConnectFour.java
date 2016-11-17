@@ -21,6 +21,9 @@ public class ConnectFour extends JFrame{
     //Player number either player one or two
     private int player = 1;
 
+    //new game button count
+    private int newGameclick = 0;
+
     //Boolean to tell the program if it's against computer or not
     private boolean computer = false;
     private int numPlayers;
@@ -85,9 +88,10 @@ public class ConnectFour extends JFrame{
     public ConnectFour()
     {
         //ImageIcons
-        redPiece = new ImageIcon("./images/redPiece100.png");
-        yellowPiece = new ImageIcon("./images/yellowPiece100.png");
-        //yellowPiece = new ImageIcon("./images/ger100.png");
+        //redPiece = new ImageIcon("./images/redPiece100.png");
+        redPiece = new ImageIcon("./images/gerRed100.png");
+        //yellowPiece = new ImageIcon("./images/yellowPiece100.png");
+        yellowPiece = new ImageIcon("./images/gerYellow100.png");
         empty = new ImageIcon("./images/empty100.png");
 
         //Dimension
@@ -194,15 +198,22 @@ public class ConnectFour extends JFrame{
                 {
                     computer = false;
                     addPlayer();
-                    colButtonsListener();
+                    if(newGameclick < 1)
+                    {
+                        colButtonsListener();
+                    }
                 }
                 else if(numPlayers == JOptionPane.NO_OPTION)
                 {
                     computer = true;
                     addPlayer();
-                    colButtonsListener();
+                    if(newGameclick < 1)
+                    {
+                        colButtonsListener();
+                    }
                 }
-                //colButtonsListener();
+
+                newGameclick++;
             }
             else if(e.getSource() == resetGame)
             {
@@ -270,7 +281,7 @@ public class ConnectFour extends JFrame{
         menuButtons.add(newGame);
         menuButtons.add(newPlayer);
         menuButtons.add(highScore);
-        menuButtons.add(resetGame);
+        //menuButtons.add(resetGame);
         menuButtons.setPreferredSize(score_size);
         add(menuButtons,BorderLayout.WEST);
     }
@@ -329,7 +340,6 @@ public class ConnectFour extends JFrame{
                 }
             }
         }
-        removeColListener();
     }
     public void removeColListener()
     {
@@ -452,6 +462,13 @@ public class ConnectFour extends JFrame{
                     }
 
                 }
+            }
+            if(CheckMethods.checkWin(board) != 'N')
+            {
+                removeColListener();
+                getScores();
+                newGameclick = 0;
+                resetBoard();
             }
     }
     public void switchUsers()
