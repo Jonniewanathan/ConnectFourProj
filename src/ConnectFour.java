@@ -37,13 +37,11 @@ public class ConnectFour extends JFrame{
     private ArrayList<Player> players;
 
     private String p1Name;
-    private String p2Name;
 
     //Menu Buttons
     private JButton newGame;
     private JButton newPlayer;
     private JButton highScore;
-    private JButton resetGame;
 
     //Image icons for my pieces
     private ImageIcon redPiece;
@@ -82,7 +80,6 @@ public class ConnectFour extends JFrame{
     private Player p1;
     private Player p2;
     private Computer comp;
-    private Player compTemp;
     private Player temp;
 
     //Player list Number select
@@ -189,7 +186,7 @@ public class ConnectFour extends JFrame{
         newGame.addActionListener(handler);
         newPlayer.addActionListener(handler);
         highScore.addActionListener(handler);
-        resetGame.addActionListener(handler);
+
 
         //forces the window to not be resizeable
         setResizable(false);
@@ -236,10 +233,6 @@ public class ConnectFour extends JFrame{
                 }
                 getScores();
                 newGameclick++;
-            }
-            else if(e.getSource() == resetGame)
-            {
-                resetBoard();
             }
             else if(e.getSource() == newPlayer)
             {
@@ -311,11 +304,9 @@ public class ConnectFour extends JFrame{
         newGame = new JButton("New Game");
         newPlayer = new JButton("New Player");
         highScore = new JButton("High Score");
-        resetGame = new JButton("Reset Board");
         menuButtons.add(newGame);
         menuButtons.add(newPlayer);
         menuButtons.add(highScore);
-        //menuButtons.add(resetGame);
         menuButtons.setPreferredSize(score_size);
         add(menuButtons,BorderLayout.WEST);
     }
