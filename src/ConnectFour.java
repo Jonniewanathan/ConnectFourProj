@@ -248,6 +248,7 @@ public class ConnectFour extends JFrame{
             }
             else if(e.getSource() == highScore)
             {
+                open();
                 compInList = true;
                 printPlayerlist();
 
@@ -322,12 +323,15 @@ public class ConnectFour extends JFrame{
     public void printPlayerlist()
     {
         int num = 1;
+        JTextArea playerList = new JTextArea(20,20);
         if(compInList)
         {
             num = 0;
         }
-        JTextArea playerList = new JTextArea(20,20);
-        playerList.append("Enter the number of the player you would like to play as\n");
+        else
+        {
+            playerList.append("Enter the number of the player you would like to play as\n");
+        }
         for (int i = num; i < players.size() ; i++)//Starts at one so as not to display the computer in the player select
         {
             playerList.append( " " + i + ": " + players.get(i).toString() + "\n");
@@ -342,7 +346,7 @@ public class ConnectFour extends JFrame{
         }
         else
         {
-            JOptionPane.showMessageDialog(null,playerList);
+            JOptionPane.showMessageDialog(null,playerList,"High Scores",JOptionPane.PLAIN_MESSAGE);
             compInList = false;
         }
 
