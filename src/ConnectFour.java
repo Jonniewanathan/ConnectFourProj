@@ -30,6 +30,9 @@ public class ConnectFour extends JFrame{
     private boolean computer = false;
     private int numPlayers;
 
+    //Boolean to display the computer scores in the highscores
+    boolean compInList = false;
+
     //Making a player Arraylist
     private ArrayList<Player> players;
 
@@ -224,7 +227,11 @@ public class ConnectFour extends JFrame{
                     {
                         colButtonsListener();
                         p1 = players.get(pNumber);
-                        compTemp = players.get(0);
+                        temp = players.get(0);
+                        int compWin = temp.getWin();
+                        int compLose = temp.getLoses();
+                        comp.setExactWin(compWin);
+                        comp.setExactLose(compLose);
                     }
                 }
                 getScores();
@@ -238,6 +245,12 @@ public class ConnectFour extends JFrame{
             {
                 addPlayer();
                 save();
+            }
+            else if(e.getSource() == highScore)
+            {
+                compInList = true;
+                printPlayerlist();
+
             }
             else if(e.getSource() == colButtons[0])
             {
@@ -308,17 +321,31 @@ public class ConnectFour extends JFrame{
     //Displays the list of players stored in the Arraylist
     public void printPlayerlist()
     {
+        int num = 1;
+        if(compInList)
+        {
+            num = 0;
+        }
         JTextArea playerList = new JTextArea(20,20);
         playerList.append("Enter the number of the player you would like to play as\n");
-        for (int i = 0; i < players.size() ; i++)
+        for (int i = num; i < players.size() ; i++)//Starts at one so as not to display the computer in the player select
         {
             playerList.append( " " + i + ": " + players.get(i).toString() + "\n");
         }
-        pNumber = Integer.parseInt(JOptionPane.showInputDialog(playerList));
-        if(numPlayers == JOptionPane.YES_OPTION)
+        if(!compInList)
         {
-            p2Number = Integer.parseInt(JOptionPane.showInputDialog(playerList));
+            pNumber = Integer.parseInt(JOptionPane.showInputDialog(playerList));
+            if(numPlayers == JOptionPane.YES_OPTION)
+            {
+                p2Number = Integer.parseInt(JOptionPane.showInputDialog(playerList));
+            }
         }
+        else
+        {
+            JOptionPane.showMessageDialog(null,playerList);
+            compInList = false;
+        }
+
     }
     //Adds players to the game
     public void addPlayer()
@@ -427,6 +454,8 @@ public class ConnectFour extends JFrame{
         }
         else if(numPlayers == JOptionPane.NO_OPTION)
         {
+            players.remove(0);
+            players.add(0,comp);
             pl2Name.setText("Name: " + comp.getName());
             p2Win.setText("Win: " + Integer.toString(comp.getWin()));
             p2Loses.setText("Loses: " + Integer.toString(comp.getLoses()));

@@ -14,8 +14,8 @@ public class Player implements Serializable{
     }
     Player(String name){
         setName(name);
-        setWin(0);
-        setLoses(0);
+        setExactWin(0);
+        setExactLose(0);
     }
     public void setName(String name)
     {
@@ -28,6 +28,14 @@ public class Player implements Serializable{
     public void setLoses(int loses)
     {
         this.loses += loses;
+    }
+    public void setExactWin(int win)
+    {
+        this.win = win;
+    }
+    public void setExactLose(int loses)
+    {
+        this.loses = loses;
     }
     public String getName()
     {
