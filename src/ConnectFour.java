@@ -6,6 +6,8 @@
     import java.awt.*;
     import java.awt.event.ActionEvent;
     import java.awt.event.ActionListener;
+    import java.util.*;
+    import java.io.*;
 
 public class ConnectFour extends JFrame{
 
@@ -27,6 +29,9 @@ public class ConnectFour extends JFrame{
     //Boolean to tell the program if it's against computer or not
     private boolean computer = false;
     private int numPlayers;
+
+    //Making a player Arraylist
+    private ArrayList<Player> players;
 
     private String p1Name;
     private String p2Name;
@@ -74,7 +79,12 @@ public class ConnectFour extends JFrame{
     private Player p1;
     private Player p2;
     private Computer comp;
+    private Player compTemp;
     private Player temp;
+
+    //Player list Number select
+    private int pNumber;
+    private int p2Number;
 
 
     //Creating the ButtonHandler
@@ -88,10 +98,10 @@ public class ConnectFour extends JFrame{
     public ConnectFour()
     {
         //ImageIcons
-        //redPiece = new ImageIcon("./images/redPiece100.png");
-        redPiece = new ImageIcon("./images/gerRed100.png");
-        //yellowPiece = new ImageIcon("./images/yellowPiece100.png");
-        yellowPiece = new ImageIcon("./images/gerYellow100.png");
+        redPiece = new ImageIcon("./images/redPiece100.png");
+        //redPiece = new ImageIcon("./images/gerRed100.png");
+        yellowPiece = new ImageIcon("./images/yellowPiece100.png");
+        //yellowPiece = new ImageIcon("./images/gerYellow100.png");
         empty = new ImageIcon("./images/empty100.png");
 
         //Dimension
@@ -139,6 +149,12 @@ public class ConnectFour extends JFrame{
         //Creates the Computer Object
         comp = new Computer();
 
+        //Creates the Array list
+        players = new ArrayList<>();
+
+        //Adds comp object to the players ArrayList
+        players.add(comp);
+
         //Adding the column buttons to the JPanel colButton
         for (int i = 0; i < colButtons.length; i++)
         {
@@ -185,39 +201,43 @@ public class ConnectFour extends JFrame{
     {
         public void actionPerformed(ActionEvent e)
         {
-            if(CheckMethods.checkWin(board) != 'N')
-            {
-                getScores();
-                removeColListener();
-            }
             if(e.getSource() == newGame)
             {
+                open();
                 numPlayers = JOptionPane.showConfirmDialog(null,"2 Player?");
                 resetBoard();
+                printPlayerlist();
                 if(numPlayers == JOptionPane.YES_OPTION)
                 {
                     computer = false;
-                    addPlayer();
                     if(newGameclick < 1)
                     {
                         colButtonsListener();
+                        p1 = players.get(pNumber);
+                        p2 = players.get(p2Number);
                     }
                 }
                 else if(numPlayers == JOptionPane.NO_OPTION)
                 {
                     computer = true;
-                    addPlayer();
                     if(newGameclick < 1)
                     {
                         colButtonsListener();
+                        p1 = players.get(pNumber);
+                        compTemp = players.get(0);
                     }
                 }
-
+                getScores();
                 newGameclick++;
             }
             else if(e.getSource() == resetGame)
             {
                 resetBoard();
+            }
+            else if(e.getSource() == newPlayer)
+            {
+                addPlayer();
+                save();
             }
             else if(e.getSource() == colButtons[0])
             {
@@ -285,31 +305,58 @@ public class ConnectFour extends JFrame{
         menuButtons.setPreferredSize(score_size);
         add(menuButtons,BorderLayout.WEST);
     }
-    public void addPlayer()
+    //Displays the list of players stored in the Arraylist
+    public void printPlayerlist()
     {
+        JTextArea playerList = new JTextArea(20,20);
+        playerList.append("Enter the number of the player you would like to play as\n");
+        for (int i = 0; i < players.size() ; i++)
+        {
+            playerList.append( " " + i + ": " + players.get(i).toString() + "\n");
+        }
+        pNumber = Integer.parseInt(JOptionPane.showInputDialog(playerList));
         if(numPlayers == JOptionPane.YES_OPTION)
         {
-            p1Name = JOptionPane.showInputDialog("Please enter your name");
-            p1 = new Player(p1Name);
-            pName.setText("Name: " + p1.getName());
-            pWin.setText("Win: " + Integer.toString(p1.getWin()));
-            pLoses.setText("Loses: " + Integer.toString(p1.getLoses()));
-
-            p2Name = JOptionPane.showInputDialog("Please enter your name");
-            p2 = new Player(p2Name);
-            pl2Name.setText("Name: " + p2.getName());
-            p2Win.setText("Win: " + Integer.toString(p2.getWin()));
-            p2Loses.setText("Loses: " + Integer.toString(p2.getLoses()));
-        }
-        else
-        {
-            p1Name = JOptionPane.showInputDialog("Please enter your name");
-            p1 = new Player(p1Name);
-            pName.setText("Name: " + p1.getName());
-            pWin.setText("Win: " + Integer.toString(p1.getWin()));
-            pLoses.setText("Loses: " + Integer.toString(p1.getLoses()));
+            p2Number = Integer.parseInt(JOptionPane.showInputDialog(playerList));
         }
     }
+    //Adds players to the game
+    public void addPlayer()
+    {
+        p1Name = JOptionPane.showInputDialog("Please enter your name");
+        p1 = new Player(p1Name);
+        players.add(p1);
+    }
+    //saves to the .dat file
+    public void save()
+    {
+        try{
+            ObjectOutputStream os;
+            os = new ObjectOutputStream(new FileOutputStream ("Player.dat"));
+            os.writeObject(players);
+            os.close();
+        }catch(IOException e)
+        {
+            JOptionPane.showMessageDialog(null,"You done Goofed!");
+            e.printStackTrace();
+        }
+
+    }
+    //loads from the .dat file
+    public void open() {
+        try{
+            ObjectInputStream is;
+            is = new ObjectInputStream(new FileInputStream ("Player.dat"));
+            players  = (ArrayList<Player>) is.readObject();
+            is.close();
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null,"open didn't work");
+            e.printStackTrace();
+        }
+
+    }
+    //Adds the column button listteners
     public void colButtonsListener()
     {
         for (int i = 0;i < colButtons.length;i++)
@@ -317,6 +364,7 @@ public class ConnectFour extends JFrame{
             colButtons[i].addActionListener(handler);
         }
     }
+    //empties the board of pieces
     public void emptyBoard()
     {
         for (int i = 5; i >= 0; i--)
@@ -328,7 +376,7 @@ public class ConnectFour extends JFrame{
             }
         }
     }
-    //Resets back to start
+    //Resets the underlying 2-d array of ints back to 1
     public void resetBoard()
     {
         for (int i = 0; i < 6; i++) {
@@ -341,6 +389,7 @@ public class ConnectFour extends JFrame{
             }
         }
     }
+    //removes action listeners from the column select buttons
     public void removeColListener()
     {
         for (int i = 0;i < colButtons.length;i++)
@@ -348,6 +397,7 @@ public class ConnectFour extends JFrame{
             colButtons[i].removeActionListener(handler);
         }
     }
+    //adds the stat board to the right side
     public void addScoreBoard()
     {
         score.add(pName);
@@ -357,35 +407,19 @@ public class ConnectFour extends JFrame{
         score.add(p2Win);
         score.add(p2Loses);
         add(score,BorderLayout.EAST);
-        if(!computer)
-        {
-            pName.setVisible(true);
-            pWin.setVisible(true);
-            pLoses.setVisible(true);
-            pl2Name.setVisible(true);
-            p2Win.setVisible(true);
-            p2Loses.setVisible(true);
-        }
-        else
-        {
-            pName.setVisible(true);
-            pWin.setVisible(true);
-            pLoses.setVisible(true);
-            pl2Name.setVisible(false);
-            p2Win.setVisible(false);
-            p2Loses.setVisible(false);
-        }
     }
     //Gets the scores for the particular player
     public void getScores()
     {
+        pName.setText("Name: " + p1.getName());
+        pWin.setText("Win: " + Integer.toString(p1.getWin()));
+        pLoses.setText("Loses: " + Integer.toString(p1.getLoses()));
+        pWin.repaint();
+        pLoses.repaint();
+
         if(numPlayers == JOptionPane.YES_OPTION)
         {
-            pWin.setText("Win: " + Integer.toString(p1.getWin()));
-            pLoses.setText("Loses: " + Integer.toString(p1.getLoses()));
-            pWin.repaint();
-            pLoses.repaint();
-
+            pl2Name.setText("Name: " + p2.getName());
             p2Win.setText("Win: " + Integer.toString(p2.getWin()));
             p2Loses.setText("Loses: " + Integer.toString(p2.getLoses()));
             p2Win.repaint();
@@ -393,10 +427,11 @@ public class ConnectFour extends JFrame{
         }
         else if(numPlayers == JOptionPane.NO_OPTION)
         {
-            pWin.setText("Win: " + Integer.toString(p1.getWin()));
-            pLoses.setText("Loses: " + Integer.toString(p1.getLoses()));
-            pWin.repaint();
-            pLoses.repaint();
+            pl2Name.setText("Name: " + comp.getName());
+            p2Win.setText("Win: " + Integer.toString(comp.getWin()));
+            p2Loses.setText("Loses: " + Integer.toString(comp.getLoses()));
+            p2Win.repaint();
+            p2Loses.repaint();
         }
     }
     //Sets the colour of the piece on the board
@@ -430,6 +465,8 @@ public class ConnectFour extends JFrame{
             num++;
         }
     }
+    //when a column button is selected it calls the setColour method
+    //also switches the user if you are playing 2 player or calls the computer to pick a column
     public void buttonPressed(int col)
     {
             if(!computer)
@@ -469,8 +506,10 @@ public class ConnectFour extends JFrame{
                 getScores();
                 newGameclick = 0;
                 resetBoard();
+                save();
             }
     }
+    //switches the user when playing 2 player
     public void switchUsers()
     {
         if(player == 1)

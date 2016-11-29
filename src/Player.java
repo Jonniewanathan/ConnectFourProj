@@ -1,7 +1,9 @@
+import java.io.*;
+
 /**
  * Created by t00125172 on 15/11/2016.
  */
-public class Player {
+public class Player implements Serializable{
     private String name;
     private int win;
     private int loses;
