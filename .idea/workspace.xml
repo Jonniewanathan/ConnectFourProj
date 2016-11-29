@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="224e12c3-b8e4-4617-885f-872d51a33c7a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Player.dat" afterPath="$PROJECT_DIR$/Player.dat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ConnectFour.java" afterPath="$PROJECT_DIR$/src/ConnectFour.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Player.java" afterPath="$PROJECT_DIR$/src/Player.java" />
-    </list>
+    <list default="true" id="224e12c3-b8e4-4617-885f-872d51a33c7a" name="Default" comment="" />
     <ignored path="ConnectFourProj.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -28,7 +24,7 @@
       <file leaf-file-name="ConnectFour.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ConnectFour.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="527">
+            <state relative-caret-position="2516">
               <caret line="345" column="31" selection-start-line="345" selection-start-column="31" selection-end-line="345" selection-end-column="31" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -872,7 +868,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ConnectFour.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
+        <state relative-caret-position="2516">
           <caret line="345" column="31" selection-start-line="345" selection-start-column="31" selection-end-line="345" selection-end-column="31" />
           <folding>
             <element signature="imports" expanded="true" />
