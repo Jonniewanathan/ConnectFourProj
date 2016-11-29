@@ -204,6 +204,7 @@ public class ConnectFour extends JFrame{
         {
             if(e.getSource() == newGame)
             {
+                playSound("boxMovement.wav");
                 open();
                 numPlayers = JOptionPane.showConfirmDialog(null,"2 Player?");
                 resetBoard();
@@ -300,13 +301,12 @@ public class ConnectFour extends JFrame{
             }
         }
     }
-    public void playSound()
+    public void playSound(String soundFile)
     {
         try
         {
             // open the sound file as a Java input stream
-            String gongFile = "john.wav";
-            InputStream in = new FileInputStream(gongFile);
+            InputStream in = new FileInputStream(soundFile);
 
             // create an audiostream from the inputstream
             AudioStream audioStream = new AudioStream(in);
@@ -512,6 +512,7 @@ public class ConnectFour extends JFrame{
     //also switches the user if you are playing 2 player or calls the computer to pick a column
     public void buttonPressed(int col)
     {
+            playSound("piecePlace.wav");
             if(!computer)
             {
                 setColour(col,board,player);
@@ -550,7 +551,7 @@ public class ConnectFour extends JFrame{
                 newGameclick = 0;
                 resetBoard();
                 save();
-                playSound();
+                playSound("john.wav");
             }
     }
     //switches the user when playing 2 player
