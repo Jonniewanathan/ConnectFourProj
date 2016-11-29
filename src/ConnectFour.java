@@ -8,6 +8,7 @@
     import java.awt.event.ActionListener;
     import java.util.*;
     import java.io.*;
+    import sun.audio.*;
 
 public class ConnectFour extends JFrame{
 
@@ -299,6 +300,24 @@ public class ConnectFour extends JFrame{
             }
         }
     }
+    public void playSound()
+    {
+        try
+        {
+            // open the sound file as a Java input stream
+            String gongFile = "john.wav";
+            InputStream in = new FileInputStream(gongFile);
+
+            // create an audiostream from the inputstream
+            AudioStream audioStream = new AudioStream(in);
+
+            // play the audio clip with the audioplayer class
+            AudioPlayer.player.start(audioStream);
+        }catch(IOException e)
+        {
+
+        }
+    }
     public void addMenuButtons()
     {
         newGame = new JButton("New Game");
@@ -531,6 +550,7 @@ public class ConnectFour extends JFrame{
                 newGameclick = 0;
                 resetBoard();
                 save();
+                playSound();
             }
     }
     //switches the user when playing 2 player
