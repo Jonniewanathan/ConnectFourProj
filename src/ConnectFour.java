@@ -44,6 +44,13 @@ public class ConnectFour extends JFrame{
     private JButton newPlayer;
     private JButton highScore;
 
+    //Menu Bar
+    private JMenuBar menuBar;
+    private JMenu menu;
+    //private JMenuItem menuItem;
+    private JMenuItem history;
+    private JMenuItem howToPlay;
+
     //Image icons for my pieces
     private ImageIcon redPiece;
     private ImageIcon yellowPiece;
@@ -117,6 +124,13 @@ public class ConnectFour extends JFrame{
         //BorderLayout
         border = new BorderLayout();
 
+        //Menu Bar
+        menuBar = new JMenuBar();
+        menu = new JMenu("Info");
+        //menuItem = new JMenuItem("Menu Item");
+        history = new JMenuItem("History");
+        howToPlay = new JMenuItem("How To Play!");
+
         //Grid Layouts
         boardGrid = new GridLayout(6,7);
         scoreGrid = new GridLayout(6,1);
@@ -143,6 +157,14 @@ public class ConnectFour extends JFrame{
         setTitle("Connect Four");
         setSize(900,700);
         setLayout(border);
+
+        //Adding menu bar
+        menuBar.add(menu);
+        //menu.add(menuItem);
+        menu.add(history);
+        menu.add(howToPlay);
+        setJMenuBar(menuBar);
+
 
         //Creates the board
         board = boardObj.getBoard();
@@ -187,6 +209,10 @@ public class ConnectFour extends JFrame{
         newGame.addActionListener(handler);
         newPlayer.addActionListener(handler);
         highScore.addActionListener(handler);
+
+        //Adding action listener to menu items
+        history.addActionListener(handler);
+        howToPlay.addActionListener(handler);
 
 
         //forces the window to not be resizeable
@@ -247,6 +273,43 @@ public class ConnectFour extends JFrame{
                 compInList = true;
                 printPlayerlist();
 
+            }
+            else if(e.getSource() == history)
+            {
+                String stringHistory = "Connect Four (also known as Captain's Mistress, Four Up, Plot Four, Find Four, Fourplay, Four in a Row,\n" +
+                        "Four in a Line and Gravitrips (in Soviet Union) ) is a two-player connection game in which the players first choose a \n" +
+                        "color and then take turns dropping colored discs from the top into a seven-column, six-row vertically suspended grid. \n" +
+                        "The pieces fall straight down, occupying the next available space within the column. The objective of the game is to be \n" +
+                        "the first to form a horizontal, vertical, or diagonal line of four of one's own discs. Connect Four is a solved game. \n" +
+                        "The first player can always win by playing the right moves.\n" +
+                        "\n" +
+                        "The game was first sold under the famous Connect Four trademark by Milton Bradley in February 1974.";
+                JOptionPane.showMessageDialog(null,stringHistory,"History",JOptionPane.PLAIN_MESSAGE);
+            }
+            else if(e.getSource() == howToPlay)
+            {
+                String stringHowToPlay = "The Player starts by placing their first piece onto the board.\n" +
+                        "Player 2/Computer places their piece next.\n" +
+                        "This goes back and forth until one player gets four pieces in a row horizontally,Vertically or Diagonally eg.\n" +
+                        "X X X X X X X    X X X X X X X\n" +
+                        "X X X X X X X    X X X X X X X\n" +
+                        "X X X X X X X    X X X X O X X\n" +
+                        "X X X X X X X    X X X O X X X\n" +
+                        "X X X X X X X    X X O X X X X\n" +
+                        "X O O O O X X   X O X X X X X\n\n" +
+                        "X X X X X X X    X X X X X X X\n" +
+                        "X X X X X X X    X X X X X X X\n" +
+                        "X X X O X X X    X O X X X X X\n" +
+                        "X X X O X X X    X X O X X X X\n" +
+                        "X X X O X X X    X X X O X X X\n" +
+                        "X X X O X X X    X X X X O X X\n";
+
+
+
+
+
+
+                JOptionPane.showMessageDialog(null,stringHowToPlay,"How to Play!",JOptionPane.PLAIN_MESSAGE);
             }
             else if(e.getSource() == colButtons[0])
             {
