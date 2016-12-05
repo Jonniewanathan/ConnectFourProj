@@ -91,7 +91,7 @@ public class Player implements Serializable{
      */
     public String toString()
     {
-        return "Name: " + getName() + "\n" + "Win: " + getWin() + "\n" + "Loses: " + getLoses();
+        return "Name: " + getName() + "" + " Win: " + getWin() + "" + " Loses: " + getLoses();
     }
 
 }//end of class

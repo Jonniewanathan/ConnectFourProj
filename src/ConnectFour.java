@@ -39,6 +39,16 @@ public class ConnectFour extends JFrame{
 
     private String p1Name;
 
+    //ComboBox creation
+    JComboBox<String> comboBox;
+    JComboBox<String> comboBox2;
+
+    //JButtons
+    JButton selectPlayer;
+
+    //JFrame for player select
+    JFrame playerListFrame;
+
     //Menu Buttons
     private JButton newGame;
     private JButton newPlayer;
@@ -127,7 +137,6 @@ public class ConnectFour extends JFrame{
         //Menu Bar
         menuBar = new JMenuBar();
         menu = new JMenu("Info");
-        //menuItem = new JMenuItem("Menu Item");
         history = new JMenuItem("History");
         howToPlay = new JMenuItem("How To Play!");
 
@@ -235,6 +244,16 @@ public class ConnectFour extends JFrame{
                 numPlayers = JOptionPane.showConfirmDialog(null,"2 Player?");
                 resetBoard();
                 printPlayerlist();
+            }
+            else if(e.getSource() == newPlayer)
+            {
+                addPlayer();
+                save();
+            }
+            if(e.getSource() == selectPlayer)
+            {
+                pNumber = (1 + comboBox.getSelectedIndex());
+                p2Number = (1 + comboBox2.getSelectedIndex());
                 if(numPlayers == JOptionPane.YES_OPTION)
                 {
                     computer = false;
@@ -261,18 +280,12 @@ public class ConnectFour extends JFrame{
                 }
                 getScores();
                 newGameclick++;
-            }
-            else if(e.getSource() == newPlayer)
-            {
-                addPlayer();
-                save();
+                playerListFrame.dispose();
             }
             else if(e.getSource() == highScore)
             {
                 open();
-                compInList = true;
-                printPlayerlist();
-
+                highscoreslist();
             }
             else if(e.getSource() == history)
             {
@@ -291,25 +304,24 @@ public class ConnectFour extends JFrame{
                 String stringHowToPlay = "The Player starts by placing their first piece onto the board.\n" +
                         "Player 2/Computer places their piece next.\n" +
                         "This goes back and forth until one player gets four pieces in a row horizontally,Vertically or Diagonally eg.\n" +
-                        "X X X X X X X    X X X X X X X\n" +
-                        "X X X X X X X    X X X X X X X\n" +
-                        "X X X X X X X    X X X X O X X\n" +
-                        "X X X X X X X    X X X O X X X\n" +
-                        "X X X X X X X    X X O X X X X\n" +
-                        "X O O O O X X   X O X X X X X\n\n" +
-                        "X X X X X X X    X X X X X X X\n" +
-                        "X X X X X X X    X X X X X X X\n" +
-                        "X X X O X X X    X O X X X X X\n" +
-                        "X X X O X X X    X X O X X X X\n" +
-                        "X X X O X X X    X X X O X X X\n" +
-                        "X X X O X X X    X X X X O X X\n";
+                        "X X X X X X X\t X X X X X X X\n" +
+                        "X X X X X X X\t X X X X X X X\n" +
+                        "X X X X X X X\t X X X X O X X\n" +
+                        "X X X X X X X\t X X X O X X X\n" +
+                        "X X X X X X X\t X X O X X X X\n" +
+                        "X O O O O X X\t X O X X X X X\n\n" +
+                        "X X X X X X X\t X X X X X X X\n" +
+                        "X X X X X X X\t X X X X X X X\n" +
+                        "X X X O X X X\t X O X X X X X\n" +
+                        "X X X O X X X\t X X O X X X X\n" +
+                        "X X X O X X X\t X X X O X X X\n" +
+                        "X X X O X X X\t X X X X O X X\n";
 
+                Font font = new Font(Font.MONOSPACED,Font.PLAIN,12);
+                JTextArea text = new JTextArea(stringHowToPlay);
+                text.setFont(font);
 
-
-
-
-
-                JOptionPane.showMessageDialog(null,stringHowToPlay,"How to Play!",JOptionPane.PLAIN_MESSAGE);
+                JOptionPane.showMessageDialog(null,text,"How to Play!",JOptionPane.PLAIN_MESSAGE);
             }
             else if(e.getSource() == colButtons[0])
             {
@@ -396,32 +408,65 @@ public class ConnectFour extends JFrame{
     public void printPlayerlist()
     {
         int num = 1;
-        JTextArea playerList = new JTextArea(20,20);
-        if(compInList)
-        {
-            num = 0;
-        }
-        else
-        {
-            playerList.append("Enter the number of the player you would like to play as\n");
-        }
+//        JTextArea playerList = new JTextArea(20,20);
+//        if(compInList)
+//        {
+//            num = 0;
+//        }
+//        else
+//        {
+//            playerList.append("Enter the number of the player you would like to play as\n");
+//        }
+//        for (int i = num; i < players.size() ; i++)//Starts at one so as not to display the computer in the player select
+//        {
+//            playerList.append( " " + i + ": " + players.get(i).toString() + "\n");
+//        }
+//        if(!compInList)
+//        {
+//            pNumber = Integer.parseInt(JOptionPane.showInputDialog(playerList));
+//            if(numPlayers == JOptionPane.YES_OPTION)
+//            {
+//                p2Number = Integer.parseInt(JOptionPane.showInputDialog(playerList));
+//            }
+//        }
+//        else
+//        {
+//            JOptionPane.showMessageDialog(null,playerList,"High Scores",JOptionPane.PLAIN_MESSAGE);
+//            compInList = false;
+//        }
+        playerListFrame = new JFrame("Player Pick");
+        selectPlayer = new JButton("Select Player");
+        comboBox = new JComboBox<>();
+        comboBox2 = new JComboBox<>();
         for (int i = num; i < players.size() ; i++)//Starts at one so as not to display the computer in the player select
+        {
+            comboBox.addItem(" " + i + ": " + players.get(i).toString() + "\n");
+            comboBox2.addItem(" " + i + ": " + players.get(i).toString() + "\n");
+        }
+        selectPlayer.addActionListener(handler);
+        playerListFrame.setSize(400,140);
+        playerListFrame.setLayout(flow);
+        playerListFrame.add(comboBox);
+        if(numPlayers == JOptionPane.YES_OPTION)
+        {
+            playerListFrame.add(comboBox2);
+        }
+        playerListFrame.add(selectPlayer);
+        playerListFrame.setVisible(true);
+        playerListFrame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
+    }
+    public void highscoreslist()
+    {
+        int num = 1;
+        JTextArea playerList = new JTextArea(20,20);
+        for (int i = 0; i < players.size() ; i++)//Starts at one so as not to display the computer in the player select
         {
             playerList.append( " " + i + ": " + players.get(i).toString() + "\n");
         }
-        if(!compInList)
-        {
-            pNumber = Integer.parseInt(JOptionPane.showInputDialog(playerList));
-            if(numPlayers == JOptionPane.YES_OPTION)
-            {
-                p2Number = Integer.parseInt(JOptionPane.showInputDialog(playerList));
-            }
-        }
-        else
-        {
-            JOptionPane.showMessageDialog(null,playerList,"High Scores",JOptionPane.PLAIN_MESSAGE);
-            compInList = false;
-        }
+
+        JOptionPane.showMessageDialog(null,playerList,"High Scores",JOptionPane.PLAIN_MESSAGE);
+        compInList = false;
 
     }
     //Adds players to the game
